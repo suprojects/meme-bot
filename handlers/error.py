@@ -14,7 +14,7 @@ Error:
 Update:
 {update}
 
-""")
+"""))
 
     try:
         if context.error.message == "Have no rights to send a message":
