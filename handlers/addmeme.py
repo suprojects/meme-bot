@@ -1,6 +1,7 @@
 from telegram.ext import CommandHandler, Filters
 from secrets import SUDO_USERS
 from helpers.templates import template
+from helpers.make import make
 
 def new(update, context):
     msg = update.message
@@ -15,24 +16,27 @@ def new(update, context):
 
     NewMemeTemplate = RawNewMemeTemplate.split(',')
     
-    if len(NewMemeTemplate) != 4:
+    if len(NewMemeTemplate) != 3:
         msg.reply_text(f'''
-Are you noob? Give me <code>4</code> params separated by a comma. You gave me <code>{len(NewMemeTemplate)}</code>. What am I to do with this?\n
-<code>Shortname</code>, <code>Meme ID</code>, <code>Number of Boxes</code>, <code>Example Meme</code>''', parse_mode = 'HTML')
+Are you noob? Give me <code>3</code> params separated by a comma. You gave me <code>{len(NewMemeTemplate)}</code>. What am I to do with this?\n
+<code>Shortname</code>, <code>Meme ID</code>, <code>Number of Boxes</code>''', parse_mode = 'HTML')
         return
 
     msg.reply_text(f'''
 
-Adding new meme to template:
+Adding new meme template:
 
 Shortname: <code>{NewMemeTemplate[0]}</code>
 Meme ID: <code>{NewMemeTemplate[1]}</code>
 Number of fields: <code>{NewMemeTemplate[2]}</code>
-Example meme: <code>{NewMemeTemplate[3]}</code>
 
 ''', parse_mode = 'HTML')
     
-    template[NewMemeTemplate[0]] = {'id': NewMemeTemplate[1], 'texts': NewMemeTemplate[2], 'help': NewMemeTemplate[3]}
+    texts = (", ".join(["text" + str(i) for i in range(1, int(NewMemeTemplate[2]) + 1)])).split(',')
+
+    sentphoto = update.message.reply_photo(make(NewMemeTemplate[1], texts))
+
+    template[NewMemeTemplate[0]] = {'id': NewMemeTemplate[1], 'texts': NewMemeTemplate[2], 'help': sentphoto.photo[0].file_id}
 
     NewFileData = f'template = {template}'
 
@@ -40,6 +44,8 @@ Example meme: <code>{NewMemeTemplate[3]}</code>
     OldFile.write(NewFileData)
     OldFile.close()
 
+
 __handlers__ = [
     [CommandHandler("addmeme", callback = new, filters=Filters.user(SUDO_USERS), run_async=True)],
 ]
+    

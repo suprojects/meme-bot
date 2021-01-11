@@ -29,7 +29,7 @@ def help_meme(update, context):
         msg.reply_text(text = (f"<code>{RawMemeTemplate}</code> is not a valid Meme Template. Send me a valid Meme Template."), parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return
 
-    texts = ", ".join(["text" + str(i) for i in range(1, MemeTemplate.get('texts') + 1)])
+    texts = ", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)])
     BUTTON_MARKUP =  InlineKeyboardMarkup([[meme_help],[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else InlineKeyboardMarkup([[meme_help]])
     msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
@@ -70,7 +70,6 @@ __handlers__ = [
     [CommandHandler("memehelp", callback = memehelp, filters=Filters.regex('^/memehelp$'), run_async=True)],
     [CommandHandler("memehelp", callback = help_meme, filters=Filters.regex('^/memehelp.\w*$'), run_async=True)],
     [CommandHandler("help", callback = help_pvt, filters=Filters.regex('^/help$') & Filters.chat_type.private, run_async=True)],
-    [CommandHandler("templates", callback = help_templates, filters=Filters.chat_type.private, run_async=True)],
     [CommandHandler("templates", callback = help_templates, filters=Filters.chat_type.private, run_async=True)],
     [CommandHandler("start", help_templates, Filters.regex('memehelp'), pass_args=False)],
 

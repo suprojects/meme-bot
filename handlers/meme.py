@@ -8,7 +8,7 @@ from telegram.utils import helpers
 
 def MakeMeme(update, context):
 
-    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
+    meme_template = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
    
     msg,usr,cht = update.message, update.message.from_user, update.message.chat
 
@@ -40,7 +40,7 @@ def MakeMeme(update, context):
     MemeText = RawMemeText.split(',')
 
 
-    if (len(MemeText) != MemeTemplate.get('texts')):
+    if (len(MemeText) != int(MemeTemplate.get('texts'))):
         BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if cht.type != 'private' else None
         update.message.reply_text(text = (f"Give me <code>{MemeTemplate.get('texts')}</code> texts separated by a comma.\nYou gave me <code>{len(MemeText)}</code>."), parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return

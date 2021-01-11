@@ -1,5 +1,1 @@
-template = {
-
-    'bf': {'id': 112126428, 'texts': 3, 'help': 'AgADBAADvqsxG3OM3FOUmtfnbS7PX_spnyddAAswHQQAAQI'},
-
-}
+template = {'bf': {'id': 112126428, 'texts': 3, 'help': 'AgADBAADvqsxG3OM3FOUmtfnbS7PX_spnyddAAswHQQAAQI'}, 'brain': {'id': '93895088', 'texts': '4', 'help': 'AgACAgQAAxkDAAIHuV_8V2KfgtKNLct7601ld1YISI1NAAKoqzEbrYbsU6nd5rTAkTBysAH4KF0AAwEAAwIAA20AA-SFAgABHgQ'}, 'buttons': {'id': '87743020', 'texts': '2', 'help': 'AgACAgQAAxkDAAIHxl_8WAsKbq2oQ2wlPLtdYPtGfNU_AALXqzEbUYXlU3O15Rch_JU0uJ7XJ10AAwEAAwIAA20AA6kYBAABHgQ'}, 'drake': {'id': '181913649', 'texts': '2', 'help': 'AgACAgQAAx0ERQUZuwACD8tf_FsYlD6E8PZE8YJ1Q-bR28z6ZAAC8KsxG6c75FNFfA3FIf8RDUIefyddAAMBAAMCAANtAAOoAwQAAR4E'}}
