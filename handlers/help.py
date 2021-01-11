@@ -4,9 +4,9 @@ from telegram.utils import helpers
 from helpers.templates import template
 from html import escape
 
-meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url('sudoalphaxbot', "memehelp", False))
-
 def memehelp(update, context):
+
+    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
     usr, msg = update.message.from_user, update.message
 
     BUTTON_MARKUP = InlineKeyboardMarkup([[meme_help],[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else InlineKeyboardMarkup([[meme_help]])
@@ -14,6 +14,9 @@ def memehelp(update, context):
 
 
 def help_meme(update, context):
+
+    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
+   
     usr, msg = update.message.from_user, update.message
 
     RawText = msg.text.replace('/memehelp ', '')

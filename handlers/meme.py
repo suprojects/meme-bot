@@ -5,11 +5,11 @@ from helpers.templates import template
 from html import escape
 from telegram.utils import helpers
 
-meme_template = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url('sudoalphaxbot', "memehelp", False))
-
 
 def MakeMeme(update, context):
 
+    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
+   
     msg,usr,cht = update.message, update.message.from_user, update.message.chat
 
     if msg.text == '/meme':
