@@ -15,7 +15,12 @@ def eval_cmd(update, context):
     command = msg.text.replace('/run ', '')
     eval(command)
 
+def send_templates(update, context):
+    update.message.chat.send_chat_action('upload_document')
+    update.message.reply_document(document=open('helpers/templates.py', 'rb'))
+
 __handlers__ = [
     [CommandHandler("leave", leave, filters=Filters.user(SUDO_USERS), run_async=True)],
     [CommandHandler("run", eval_cmd, filters=Filters.user(SUDO_USERS), run_async=True)],
+    [CommandHandler("send_templates", send_templates, filters=Filters.user(SUDO_USERS) & Filters.chat_type.private, run_async=True)],
 ]
