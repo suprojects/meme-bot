@@ -4,6 +4,13 @@ from secrets import BOT_TOKEN, SUDO_USERS
 updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 
+from os import path
+
+if not path.exists('helpers/templates.py'):
+    templfile = open('helpers/templates.py', 'w+')
+    templfile.write("template = {'bf': {'id': '112126428', 'texts': '3', 'help': 'AgADBAADvqsxG3OM3FOUmtfnbS7PX_spnyddAAswHQQAAQI'},}")
+    templfile.close()
+
 if __name__ == "__main__":
     import sys
     import os
