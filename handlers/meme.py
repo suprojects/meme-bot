@@ -1,7 +1,7 @@
 from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from helpers import make
-from helpers.templates import template
+from utils import make
+from utils.templates import template
 from html import escape
 from telegram.utils import helpers
 

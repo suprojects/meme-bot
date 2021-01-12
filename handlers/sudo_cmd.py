@@ -17,7 +17,7 @@ def eval_cmd(update, context):
 
 def send_templates(update, context):
     update.message.chat.send_chat_action('upload_document')
-    update.message.reply_document(document=open('helpers/templates.py', 'rb'))
+    update.message.reply_document(document=open('utils/templates.py', 'rb'))
 
 __handlers__ = [
     [CommandHandler("leave", leave, filters=Filters.user(SUDO_USERS), run_async=True)],

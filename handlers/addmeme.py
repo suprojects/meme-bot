@@ -1,7 +1,7 @@
 from telegram.ext import CommandHandler, Filters
 from secrets import SUDO_USERS
-from helpers.templates import template
-from helpers.make import make
+from utils.templates import template
+from utils.make import make
 
 def new(update, context):
     msg = update.message
@@ -40,7 +40,7 @@ Number of fields: <code>{NewMemeTemplate[2]}</code>
 
     NewFileData = f'template = {template}'
 
-    OldFile = open('helpers/templates.py', 'w')
+    OldFile = open('utils/templates.py', 'w')
     OldFile.write(NewFileData)
     OldFile.close()
 
@@ -54,14 +54,17 @@ def remove(update, context):
 
     NewFileData = f'template = {template}'
 
-    OldFile = open('helpers/templates.py', 'w')
+    OldFile = open('utils/templates.py', 'w')
     OldFile.write(NewFileData)
     OldFile.close()
 
 def install(update, context):
-    print('hi')
-    update.message.reply_to_message.document.get_file().download(custom_path = 'helpers/templates.py')
+    update.message.reply_to_message.document.get_file().download(custom_path = 'utils/templates.py')
 
+    import sys
+    import os
+    os.execv(sys.executable, ['python'] + sys.argv)
+    
 
 __handlers__ = [
     [CommandHandler("addmeme", callback = new, filters=Filters.user(SUDO_USERS), run_async=True)],

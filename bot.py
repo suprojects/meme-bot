@@ -6,8 +6,8 @@ dp = updater.dispatcher
 
 from os import path
 
-if not path.exists('helpers/templates.py'):
-    templfile = open('helpers/templates.py', 'w+')
+if not path.exists('utils/templates.py'):
+    templfile = open('utils/templates.py', 'w+')
     templfile.write("template = {}")
     templfile.close()
 

@@ -1,7 +1,7 @@
 from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.utils import helpers
-from helpers.templates import template
+from utils.templates import template
 from html import escape
 
 def memehelp(update, context):
