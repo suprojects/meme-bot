@@ -44,8 +44,24 @@ Number of fields: <code>{NewMemeTemplate[2]}</code>
     OldFile.write(NewFileData)
     OldFile.close()
 
+def remove(update, context):
+    msg = update.message
+
+    RawText = msg.text.replace('/rmmeme ', '')
+    RmMemeTemplate = RawText.split()[0]
+
+    template.pop(RmMemeTemplate)
+
+    NewFileData = f'template = {template}'
+
+    OldFile = open('helpers/templates.py', 'w')
+    OldFile.write(NewFileData)
+    OldFile.close()
+
+
 
 __handlers__ = [
     [CommandHandler("addmeme", callback = new, filters=Filters.user(SUDO_USERS), run_async=True)],
+    [CommandHandler("rmmeme", callback = remove, filters=Filters.user(SUDO_USERS), run_async=True)],
 ]
     
