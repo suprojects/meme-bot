@@ -58,10 +58,14 @@ def remove(update, context):
     OldFile.write(NewFileData)
     OldFile.close()
 
+def install(update, context):
+    print('hi')
+    update.message.reply_to_message.document.get_file().download(custom_path = 'helpers/templates.py')
 
 
 __handlers__ = [
     [CommandHandler("addmeme", callback = new, filters=Filters.user(SUDO_USERS), run_async=True)],
     [CommandHandler("rmmeme", callback = remove, filters=Filters.user(SUDO_USERS), run_async=True)],
+    [CommandHandler("install", callback = install, filters=Filters.user(SUDO_USERS) & Filters.reply, run_async=True)],
 ]
     
