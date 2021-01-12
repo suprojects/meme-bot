@@ -72,6 +72,14 @@ def help_templates(update, context):
     
     update.message.reply_text(text = f'Available Meme templates:\n{helptemplate}\n\nTo get an example of the meme, send /memehelp <code>{escape("<")}Template{escape(">")}</code>', parse_mode = 'HTML')
 
+def templates_group(update, context):
+    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
+    usr, msg = update.message.from_user, update.message
+
+    BUTTON_MARKUP = InlineKeyboardMarkup([[meme_help]])
+    msg.reply_text(text = 'See the available Meme templates', reply_markup = BUTTON_MARKUP)
+
+
 __handlers__ = [
     
     [CommandHandler("memehelp", callback = memehelp, filters=Filters.regex('^/memehelp$'), run_async=True)],
@@ -79,5 +87,5 @@ __handlers__ = [
     [CommandHandler("help", callback = help_pvt, filters=Filters.regex('^/help$') & Filters.chat_type.private, run_async=True)],
     [CommandHandler("templates", callback = help_templates, filters=Filters.chat_type.private, run_async=True)],
     [CommandHandler("start", help_templates, Filters.regex('memehelp'), pass_args=False)],
-
+    [CommandHandler("templates", callback = templates_group, filters=Filters.chat_type.group, run_async=True)],
 ]
