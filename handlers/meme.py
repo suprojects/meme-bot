@@ -10,6 +10,9 @@ def MakeMeme(update, context):
 
     meme_template = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
    
+    if update.edited_message:
+        return
+
     msg,usr,cht = update.message, update.message.from_user, update.message.chat
 
     if msg.text == '/meme':
