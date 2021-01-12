@@ -37,6 +37,13 @@ def help_meme(update, context):
 def help_pvt(update, context):
     usr,msg = update.message.from_user, update.message
 
+    BUTTON_MARKUP = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton(text="Our Channel 🔈", url="https://t.me/su_Bots"),
+                InlineKeyboardButton(text="Discussion group 👥",url="https://t.me/su_Chats")
+            ]
+        ])
+
     msg.reply_text(text = f'''
 
 ❔ How to send memes ❓
@@ -53,7 +60,7 @@ To see the meme's example, use <code>/memehelp</code> <code>{escape('<')}Keyword
 <b>Example</b>: <code>/memehelp bf</code>
 
 To see the available meme templates, tap 👉 /templates
-''', parse_mode = 'HTML')
+''', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
 
 def help_templates(update, context):

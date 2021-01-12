@@ -1,9 +1,18 @@
 from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from html import escape
+from telegram.utils import helpers
 
 def start(update, context):
     usr,msg = update.message.from_user, update.message
+
+    BUTTON_MARKUP = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(text="➕ Add me to your group ➕", url=helpers.create_deep_linked_url(context.bot.username, "start", True))
+        ],
+    ]
+)
 
     msg.reply_text(text = f'''
 
@@ -12,7 +21,7 @@ Hello <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a> 👋. I am a 
 I can generate memes for you 🤩!
 
 Send /help to know more.
-''', parse_mode = 'HTML')
+''', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
 
 def start_group(update, context):
