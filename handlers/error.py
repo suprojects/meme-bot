@@ -4,6 +4,15 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 def error(update, context):
 
+    try:
+        if context.error.message == "Conflict: terminated by other getUpdates request; make sure that only one bot instance is running":
+            return
+
+        else:
+            pass
+    except:
+        pass
+
     context.bot.send_message(chat_id = LOG_CHAT, text = (f"""
 
 #{context.bot.username}
