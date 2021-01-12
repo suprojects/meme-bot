@@ -8,7 +8,7 @@ from os import path
 
 if not path.exists('helpers/templates.py'):
     templfile = open('helpers/templates.py', 'w+')
-    templfile.write("template = {'bf': {'id': '112126428', 'texts': '3', 'help': 'AgADBAADpasxG9cn7VPtQaptTi9pITSAzypdAAtQzgACAg'},}")
+    templfile.write("template = {}")
     templfile.close()
 
 if __name__ == "__main__":
