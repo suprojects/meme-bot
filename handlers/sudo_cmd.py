@@ -13,7 +13,7 @@ def eval_cmd(update, context):
         return
 
     command = msg.text.replace('/run ', '')
-    eval(command)
+    exec(command)
 
 def send_templates(update, context):
     update.message.chat.send_chat_action('upload_document')
