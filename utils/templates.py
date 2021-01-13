@@ -1,1 +1,0 @@
-template = {'drake': {'id': '181913649', 'texts': '2', 'help': 'AgACAgQAAxkDAAILDF_-te3IpOFfW-vUPxCa7Ph-DZFyAALeqzEbEFz0U4I4JCOHizqIVbsFKV0AAwEAAwIAA20AA7-TAgABHgQ'}, 'car': {'id': '124822590', 'texts': '3', 'help': 'AgACAgQAAxkDAAILDl_-tfUax4floPNKaUUwSvrn3ffeAAKdqzEb3yf8Uwi6zSBQZUXjBu8bJ10AAwEAAwIAA20AA3AjBAABHgQ'}}
