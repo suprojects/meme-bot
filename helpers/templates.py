@@ -1,0 +1,1 @@
+template = {'bf': {'id': '112126428', 'texts': '3', 'help': 'AgADBAADvqsxG3OM3FOUmtfnbS7PX_spnyddAAswHQQAAQI'}, 'drake': {'id': '181913649', 'texts': '2', 'help': 'AgACAgQAAxkDAAIJ41_8Z2zuZSz-mXbCnZhWQ83BlcDOAAJ-qzEb6dDsU3kZGq96C4LC4Z0JJ10AAwEAAwIAA20AAxwiBAABHgQ'}}
