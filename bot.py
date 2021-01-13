@@ -4,16 +4,10 @@ from secrets import BOT_TOKEN, SUDO_USERS
 updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 
-from os import path, remove
 from shutil import copyfile
 from secrets import TEMPLATES_DIR
 
-if path.exists("utils/templates.py"):
-    open(f'utils/templates.py', 'w').close()
-    copyfile(f'{TEMPLATES_DIR}/templates.py', 'utils/templates.py')
-else:
-    open("demofile2.txt", "a").close()
-    copyfile(f'{TEMPLATES_DIR}/templates.py', 'utils/templates.py')
+copyfile(f'{TEMPLATES_DIR}/templates.py', 'utils/templates.py')
 
 
 if __name__ == "__main__":
