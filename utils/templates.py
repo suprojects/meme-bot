@@ -1,1 +1,0 @@
-template = {'buttons': {'id': '87743020', 'texts': '2', 'help': 'AgACAgQAAxkDAAILcV___vqkwB-UILi2v36f58XMzuI7AALpqzEbggYFUBfwlPc4TXsH4l_AJl0AAwEAAwIAA20AA8xyBAABHgQ'}}
