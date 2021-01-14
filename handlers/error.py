@@ -3,7 +3,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from utils.make import make
 
 from utils.templates import template
-from utils.syncfiles import sync
 
 
 def error(update, context):
@@ -16,11 +15,9 @@ def error(update, context):
 
             texts = str(", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)]))
 
-            print((texts).split(','))
-
             examplepic = make(MemeTemplate.get('id'), texts.split(','))
 
-            pic = update.message.reply_photo(examplepic, caption = f'<code> /meme {RawMemeTemplate} {str(texts)}</code>', parse_mode = 'HTML')
+            pic = update.message.reply_photo(examplepic, caption = f'<code>/meme {RawMemeTemplate} {str(texts)}</code>', parse_mode = 'HTML')
 
             template[RawMemeTemplate] = {'id': MemeTemplate.get('id'), 'texts': MemeTemplate.get('texts'), 'help': pic.photo[0].file_id}
 
@@ -29,8 +26,6 @@ def error(update, context):
             OldFile = open(f'utils/templates.py', 'w')
             OldFile.write(NewFileData)
             OldFile.close()
-
-            sync()
 
             return
 

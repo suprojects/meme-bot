@@ -4,11 +4,12 @@ from secrets import BOT_TOKEN, SUDO_USERS
 updater = Updater(BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 
-from shutil import copyfile
-from secrets import TEMPLATES_DIR
+from os import path
 
-copyfile(f'{TEMPLATES_DIR}/templates.py', 'utils/templates.py')
-
+if not path.exists('utils/templates.py'):
+    templfile = open('utils/templates.py', 'w+')
+    templfile.write("template = {}")
+    templfile.close()
 
 if __name__ == "__main__":
     import sys

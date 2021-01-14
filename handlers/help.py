@@ -30,7 +30,7 @@ def help_meme(update, context):
         return
 
     texts = ", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)])
-    BUTTON_MARKUP =  InlineKeyboardMarkup([[meme_help],[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else InlineKeyboardMarkup([[meme_help]])
+    BUTTON_MARKUP = ([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else None
     msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
 
@@ -54,7 +54,7 @@ You can generate memes using me in 👤 private or in a 👥 group (💬 Inline 
 <b>Meme Generation Format</b>:
 
 <code>/meme</code> <code>{escape('<')}Keyword{escape('>')}</code> <code>text1, text2, text3 ...</code>\n(the number of texts the meme supports).
-<b>Example</b>: <code>/meme bf text1, text2, text3</code>
+<b>Example</b>: <code>/meme bf text1, text2</code>
 
 To see the meme's example, use <code>/memehelp</code> <code>{escape('<')}Keyword{escape('>')}</code>.
 <b>Example</b>: <code>/memehelp bf</code>
