@@ -30,7 +30,7 @@ def help_meme(update, context):
         return
 
     texts = ", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)])
-    BUTTON_MARKUP = ([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else None
+    BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else None
     msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
 
