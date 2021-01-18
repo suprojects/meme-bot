@@ -2,6 +2,7 @@ from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.utils import helpers
 from utils.templates import template
+from utils.func import maketexts
 from html import escape
 
 def memehelp(update, context):
@@ -15,8 +16,6 @@ def memehelp(update, context):
 
 def help_meme(update, context):
 
-    meme_help = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
-   
     usr, msg = update.message.from_user, update.message
 
     RawText = msg.text.replace('/memehelp ', '')
@@ -29,7 +28,8 @@ def help_meme(update, context):
         msg.reply_text(text = (f"<code>{RawMemeTemplate}</code> is not a valid Meme Template. Send me a valid Meme Template."), parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return
 
-    texts = ", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)])
+    texts = maketexts(MemeTemplate.get('texts'))
+
     BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else None
     msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
@@ -85,7 +85,6 @@ __handlers__ = [
     [CommandHandler("memehelp", callback = memehelp, filters=Filters.regex('^/memehelp$'), run_async=True)],
     [CommandHandler("memehelp", callback = help_meme, filters=Filters.regex('^/memehelp.\w*$'), run_async=True)],
     [CommandHandler("help", callback = help_pvt, filters=Filters.regex('^/help$') & Filters.chat_type.private, run_async=True)],
-    [CommandHandler("templates", callback = help_templates, filters=Filters.chat_type.private, run_async=True)],
     [CommandHandler("start", help_templates, Filters.regex('memehelp'), pass_args=False)],
     [CommandHandler("templates", callback = templates_group, filters=Filters.chat_type.group, run_async=True)],
 ]

@@ -3,7 +3,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from utils.make import make
 
 from utils.templates import template
-
+from utils.func import maketexts
 
 def error(update, context):
 
@@ -13,7 +13,7 @@ def error(update, context):
             RawMemeTemplate = update.message.text.replace(update.message.text.split()[0] + ' ', '')
             MemeTemplate = template.get(RawMemeTemplate)
 
-            texts = str(", ".join(["text" + str(i) for i in range(1, int(MemeTemplate.get('texts')) + 1)]))
+            texts = maketexts(RawMemeTemplate)
 
             examplepic = make(MemeTemplate.get('id'), texts.split(','))
 
