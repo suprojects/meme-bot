@@ -15,6 +15,10 @@ def templatelist(update, context):
 
     BUTTONS = InlineKeyboardMarkup(keyboard)
 
+    if update.callback_query:
+        update.callback_query.message.edit_media(media = InputMediaPhoto(media = homepic, caption = 'Select the meme template to see the usage and the meme example', parse_mode = 'HTML'), reply_markup = BUTTONS)
+        return
+
     update.message.reply_photo(homepic, caption = 'Select the meme template to see the usage and the meme example', reply_markup = BUTTONS)
 
 
@@ -79,6 +83,9 @@ def navigate(update, context):
     except:
         qry.answer(text = 'No more pages', show_alert = True)
 
+    
+
+
 
 def currpage(update, context): update.callback_query.answer(text = f"Showing page {emotes.get(int(update.callback_query.data.replace('currpage_', '')))}", show_alert = True)
 
@@ -86,6 +93,7 @@ __handlers__ = [
 
     [CommandHandler('templates', callback = templatelist, filters = Filters.chat_type.private, run_async = True)],
     [CallbackQueryHandler(pattern = "^templ_", callback = templ, run_async=True)],
+    [CallbackQueryHandler(pattern = "^templist$", callback = templatelist, run_async=True)],
     [CallbackQueryHandler(pattern = "^page_", callback = navigate, run_async=True)],
     [CallbackQueryHandler(pattern = "^currpage_", callback = currpage, run_async=True)],
 ]
