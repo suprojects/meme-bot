@@ -3,7 +3,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from utils.templates import template
 from utils.func import maketexts, btns, emotes, navbtn
 
-homepic = 'AgADBQAD56sxGy0HIFTTKjRgFP2t5bbu5250AAsUYwEAAQI'
+from secrets import HOMEPIC
 
 
 def templatelist(update, context):
