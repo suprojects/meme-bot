@@ -17,6 +17,7 @@ def templatelist(update, context):
 
     if update.callback_query:
         update.callback_query.message.edit_media(media = InputMediaPhoto(media = homepic, caption = 'Select the meme template to see the usage and the meme example', parse_mode = 'HTML'), reply_markup = BUTTONS)
+        update.callback_query.answer(f"Returned to page {emotes.get(1)}")
         return
 
     update.message.reply_photo(homepic, caption = 'Select the meme template to see the usage and the meme example', reply_markup = BUTTONS)
@@ -82,9 +83,6 @@ def navigate(update, context):
 
     except:
         qry.answer(text = 'No more pages', show_alert = True)
-
-    
-
 
 
 def currpage(update, context): update.callback_query.answer(text = f"Showing page {emotes.get(int(update.callback_query.data.replace('currpage_', '')))}", show_alert = True)
