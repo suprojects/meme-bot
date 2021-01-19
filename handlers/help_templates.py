@@ -93,7 +93,7 @@ def navigate(update, context):
 
     try:
         qry.edit_message_reply_markup(reply_markup = InlineKeyboardMarkup(keyboard))
-        qry.answer(text = f"Switced to page {emotes.get(page)}")
+        qry.answer()
 
     except:
         qry.answer(text = 'No more pages', show_alert = True)
