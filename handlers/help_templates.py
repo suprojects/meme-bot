@@ -36,8 +36,7 @@ def templ(update, context):
         qry.answer(f"Template '{helptempl}' was either removed, or is missing.", show_alert = True)
         return
 
-    qry.edit_message_media(media = InputMediaPhoto(media = MemeTemplate.get('help'), caption = f'<code>/meme {helptempl} {texts}</code>', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = '🔙', callback_data = f'templist_{page}')]]))
-    
+    qry.edit_message_media(media = InputMediaPhoto(media = MemeTemplate.get('help'), caption = f'<code>/meme {helptempl} {texts}</code>', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = '🔙', callback_data = f'templist_{page}')]]))  
     qry.answer()
 
 
@@ -51,7 +50,7 @@ def navback(update, context):
     keyboard.append(navbtn(page, len(rawkeyboard)))
 
     update.callback_query.message.edit_media(media = InputMediaPhoto(media = homepic, caption = 'Select the meme template to see the usage and the meme example', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup(keyboard))
-    update.callback_query.answer(f"Returned to page {emotes.get(page)}")
+    update.callback_query.answer()
 
 
 def navigate(update, context):
@@ -79,7 +78,7 @@ def navigate(update, context):
 
         try:
             qry.edit_message_reply_markup(reply_markup = InlineKeyboardMarkup(keyboard))
-            qry.answer(text = "✋ Switched to page {}".format(emotes.get(1) if page > len(rawkeyboard) else emotes.get(len(rawkeyboard))), show_alert = True)
+            qry.answer(text = "✋ Switched to page {}".format(emotes.get(1) if page > len(rawkeyboard) else emotes.get(len(rawkeyboard))), show_alert = False)
 
         except:
             qry.answer(text = 'No more pages', show_alert = True)
