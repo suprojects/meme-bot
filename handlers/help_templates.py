@@ -2,7 +2,7 @@ from telegram.ext import Filters, CommandHandler, CallbackQueryHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from utils.templates import template
 from utils.func import maketexts, btns, emotes, navbtn
-
+from ast import literal_eval as convert
 from secrets import HOMEPIC as homepic
 
 
@@ -15,19 +15,20 @@ def templatelist(update, context):
 
     BUTTONS = InlineKeyboardMarkup(keyboard)
 
-    if update.callback_query:
-        update.callback_query.message.edit_media(media = InputMediaPhoto(media = homepic, caption = 'Select the meme template to see the usage and the meme example', parse_mode = 'HTML'), reply_markup = BUTTONS)
-        update.callback_query.answer(f"Returned to page {emotes.get(1)}")
-        return
-
     update.message.reply_photo(homepic, caption = 'Select the meme template to see the usage and the meme example', reply_markup = BUTTONS)
 
 
 def templ(update, context):
+
+    keyboard = convert(str(update.callback_query.message.reply_markup)).get('inline_keyboard')
+
+    page = int((keyboard[-1][1].get('callback_data')).replace('currpage_', ''))
+
     qry = update.callback_query
 
     helptempl = qry.data.replace('templ_', '')
     MemeTemplate = template.get(helptempl)
+
     try:
         texts = maketexts(MemeTemplate.get('texts'))
 
@@ -35,9 +36,22 @@ def templ(update, context):
         qry.answer(f"Template '{helptempl}' was either removed, or is missing.", show_alert = True)
         return
 
-    qry.edit_message_media(media = InputMediaPhoto(media = MemeTemplate.get('help'), caption = f'<code>/meme {helptempl} {texts}</code>', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = '🔙', callback_data = 'templist')]]))
+    qry.edit_message_media(media = InputMediaPhoto(media = MemeTemplate.get('help'), caption = f'<code>/meme {helptempl} {texts}</code>', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = '🔙', callback_data = f'templist_{page}')]]))
     
     qry.answer()
+
+
+def navback(update, context):
+
+    page = int(update.callback_query.data.replace('templist_', ''))
+
+    rawkeyboard = btns(5)
+    keyboard = rawkeyboard[page - 1]
+
+    keyboard.append(navbtn(page, len(rawkeyboard)))
+
+    update.callback_query.message.edit_media(media = InputMediaPhoto(media = homepic, caption = 'Select the meme template to see the usage and the meme example', parse_mode = 'HTML'), reply_markup = InlineKeyboardMarkup(keyboard))
+    update.callback_query.answer(f"Returned to page {emotes.get(page)}")
 
 
 def navigate(update, context):
@@ -91,7 +105,7 @@ __handlers__ = [
 
     [CommandHandler('templates', callback = templatelist, filters = Filters.chat_type.private, run_async = True)],
     [CallbackQueryHandler(pattern = "^templ_", callback = templ, run_async=True)],
-    [CallbackQueryHandler(pattern = "^templist$", callback = templatelist, run_async=True)],
+    [CallbackQueryHandler(pattern = "^templist_", callback = navback, run_async=True)],
     [CallbackQueryHandler(pattern = "^page_", callback = navigate, run_async=True)],
     [CallbackQueryHandler(pattern = "^currpage_", callback = currpage, run_async=True)],
 ]
