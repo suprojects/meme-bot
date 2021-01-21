@@ -10,6 +10,7 @@ if os.path.exists('tokens.py'):
     os.environ['IMGFLIP_USERNAME'] = IMGFLIP_USERNAME
     os.environ['IMGFLIP_PASSWORD'] = IMGFLIP_PASSWORD
     os.environ['HOMEPIC'] = HOMEPIC
+    os.environ['THUMB_PIC'] = THUMB_PIC
 
 IMGFLIP_URL = os.environ.get('IMGFLIP_URL')
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
@@ -18,3 +19,4 @@ LOG_CHAT = os.environ.get("LOG_ID")
 IMGFLIP_USERNAME = os.environ.get("IMGFLIP_USERNAME")
 IMGFLIP_PASSWORD = os.environ.get("IMGFLIP_PASSWORD")
 HOMEPIC = os.environ.get("HOMEPIC")
+THUMB_PIC = os.environ.get('THUMB_PIC')

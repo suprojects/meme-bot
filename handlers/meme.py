@@ -10,16 +10,17 @@ def MakeMeme(update, context):
 
     if update.edited_message: return
 
-    meme_template = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memehelp", False))
+    meme_template = InlineKeyboardButton(text="Meme Template Help", url=helpers.create_deep_linked_url(context.bot.username, "memetempl", False))
 
     msg,usr,cht = update.message, update.message.from_user, update.message.chat
 
-    if msg.text == '/meme':
+    if msg.text == '/meme' or msg.text == f'/meme@{context.bot.username}':
         BUTTON_MARKUP = InlineKeyboardMarkup([[meme_template],[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if cht.type != 'private' else InlineKeyboardMarkup([[meme_template]])
         msg.reply_text(text = "What meme you wanna make?", parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return
 
-    RawText = msg.text.replace('/meme ', '')
+
+    RawText = msg.text[int(msg.entities[0].length + 1):]
     RawMemeTemplate = RawText.split()[0]
     MemeTemplate = template.get(RawMemeTemplate)
 
@@ -61,4 +62,4 @@ def MakeMeme(update, context):
 __handlers__ = [
     [CommandHandler("meme", callback = MakeMeme, run_async=True)],
 
-]
+]   
