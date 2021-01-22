@@ -1,6 +1,6 @@
 from secrets import THUMB_PIC, HOMEPIC as homepic
 
-from uuid import uuid4  
+from uuid import uuid4
 from ast import literal_eval as convert
 from html import escape
 from re import search
@@ -25,7 +25,7 @@ def inlineblank(update, context):
             id = uuid4(),
             title = "Generate Meme",
             description = "Type in a meme template.",
-            input_message_content = InputTextMessageContent(f'Hey {update.inline_query.from_user.first_name} ✋, stop being so dumb 🗑 and read the popup messages before clicking @$#&!.'),
+            input_message_content = InputTextMessageContent('❌ Invalid action'),
             thumb_url = THUMB_PIC,
             reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Available Meme Templates", url=create_deep_linked_url(context.bot.username, "memetempl", False))]])         
     )
@@ -47,7 +47,7 @@ def inlinetempl(update, context):
                 id = uuid4(),
                 title = f"Invalid Meme Template - {RawMemeTemplate}",
                 description = f"'{RawMemeTemplate}' is not a Valid meme template.",
-                input_message_content = InputTextMessageContent(f'{RawMemeTemplate} is not a template! What do you expect me to send here you noob? 🤡'),
+                input_message_content = InputTextMessageContent(f'{RawMemeTemplate} is not a template!'),
                 thumb_url = "https://telegra.ph/file/f13d453c19bf9beb3325c.png",
                 reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Available Meme Templates", url=create_deep_linked_url(context.bot.username, "memetempl", False))]])
         )
@@ -61,7 +61,7 @@ def inlinetempl(update, context):
             type = 'photo',
             id = uuid4(),
             photo_file_id = templ.get('help'),
-            caption = f"Hey {escape(qry.from_user.first_name)}, you noob, stop clicking on the photo and give me some proper keywords!",
+            caption = '❌ Invalid action',
             parse_mode = 'HTML',
         ),
 
@@ -69,7 +69,7 @@ def inlinetempl(update, context):
             id = uuid4(),
             title = f"Using template - {RawMemeTemplate}",
             description = f"Required texts: {templ.get('texts')}\nType the texts for the meme",
-            input_message_content = InputTextMessageContent(f"Wae u gey {escape(qry.from_user.first_name)} 🏳️‍🌈? You neeed to give me the <code>{templ.get('texts')}</code> texts I need to put it in the meme <code>{RawMemeTemplate}</code>. Delet tis right now 🚮 and give me a proper symtax! 🤦‍♂️", parse_mode = 'HTML'),
+            input_message_content = InputTextMessageContent('❌ Invalid action'),
             thumb_url = THUMB_PIC,
         ),
     ]
@@ -92,7 +92,7 @@ def inlinememe(update, context):
                 id = uuid4(),
                 title = f"Invalid Meme Template - {RawMemeTemplate}",
                 description = f"'{RawMemeTemplate}' is not a Valid meme template.",
-                input_message_content = InputTextMessageContent(f'{RawMemeTemplate} is not a template! What do you expect me to send here you noob? 🤡'),
+                input_message_content = InputTextMessageContent('❌ Invalid action'),
                 thumb_url = "https://telegra.ph/file/f13d453c19bf9beb3325c.png",
                 reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Available Meme Templates", url=create_deep_linked_url(context.bot.username, "memetempl", False))]])
         )
@@ -111,7 +111,7 @@ def inlinememe(update, context):
                 type = 'photo',
                 id = uuid4(),
                 photo_file_id = templ.get('help'),
-                caption = f"I am once again asking for your support 💁‍♂️. Stop pressing the pic and <b>READ THE PROMPTS!</b>.",
+                caption = ('❌ Invalid action'),
                 parse_mode = 'HTML',
             ),
 
@@ -119,7 +119,7 @@ def inlinememe(update, context):
                 id = uuid4(),
                 title = f"Using template - {RawMemeTemplate}",
                 description = f"Required texts: {templ.get('texts')}\nGiven texts: {len(texts)}",
-                input_message_content = InputTextMessageContent(f"❌ You game me <code>{len(texts)}</code> texts for the meme '<code>{RawMemeTemplate}</code>', but I need <code>{templ.get('texts')}</code>. Kindly delete this 🚮 repeat the process, but this time, read the prompts shown.", parse_mode = 'HTML'),
+                input_message_content = InputTextMessageContent('❌ Invalid action'),
                 thumb_url = THUMB_PIC,
             ),
         ]
@@ -131,9 +131,10 @@ def inlinememe(update, context):
     result = [
         InlineQueryResultCachedPhoto(
             type = 'photo',
-            id = uuid4(),
+            id = uuid4(),   
             photo_file_id = templ.get('help'),
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = 'SU Projects', url = 'https://t.me/su_bots')]])
+            caption = ('🔁 Working on it 🔁'),
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = 'Loading. Please Wait...', url = 'https://t.me/su_bots')]]),
         ),
 
         InlineQueryResultArticle(
@@ -149,7 +150,9 @@ def inlinememe(update, context):
 
 
 def editinline(update, context):
-    if not search('^meme\s([^\s]+)\s\w.*$', update.chosen_inline_result.query): return
+    try:
+        if not search('^meme\s([^\s]+)\s\w.*$', update.chosen_inline_result.query) or update.inline_message_id is None: return
+    except AttributeError: return
     
     qry = update.chosen_inline_result
 
@@ -167,8 +170,8 @@ def editinline(update, context):
 
 __handlers__= [
 
-    [InlineQueryHandler(callback = inlineblank, pattern = ('^meme$'))],
-    [InlineQueryHandler(callback = inlinetempl, pattern = ('^meme\s[^\s]\w*$'))],
-    [InlineQueryHandler(callback = inlinememe, pattern = ('^meme\s([^\s]+)\s\w.*$'))],
+    [InlineQueryHandler(callback = inlineblank, pattern = ('^meme$'), run_async = True)],
+    [InlineQueryHandler(callback = inlinetempl, pattern = ('^meme\s[^\s]\w*$'), run_async = True)],
+    [InlineQueryHandler(callback = inlinememe, pattern = ('^meme\s([^\s]+)\s\w.*$'), run_async = True)],
     [ChosenInlineResultHandler(callback = editinline, run_async = True)],
 ]
