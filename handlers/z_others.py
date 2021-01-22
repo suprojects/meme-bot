@@ -40,6 +40,6 @@ def blackinline(update, context):
 
 
 __handlers__ = [
-    #[InlineQueryHandler(callback = errorinline, pattern = ('^'), run_async = True)],
-    #[InlineQueryHandler(callback = blackinline, run_async = True)],
+    [InlineQueryHandler(callback = errorinline, pattern = ('^'), run_async = True)],
+    [InlineQueryHandler(callback = blackinline, run_async = True)],
 ]
