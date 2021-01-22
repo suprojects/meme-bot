@@ -2,6 +2,10 @@ from telegram.ext import CommandHandler, Filters
 from secrets import SUDO_USERS
 from utils.templates import template
 from utils.make import make
+from utils.func import sortmemes
+
+import os
+import sys
 
 def new(update, context):
     msg = update.message
@@ -38,11 +42,15 @@ Number of fields: <code>{NewMemeTemplate[2]}</code>
 
     template[NewMemeTemplate[0]] = {'id': NewMemeTemplate[1], 'texts': NewMemeTemplate[2], 'help': sentphoto.photo[0].file_id}
 
-    NewFileData = f'template = {template}'
+    SortedTemplate = sortmemes(template)
+
+    NewFileData = f'template = {SortedTemplate}'
 
     OldFile = open('utils/templates.py', 'w')
     OldFile.write(NewFileData)
     OldFile.close()
+
+    os.execv(sys.executable, ['python3'] + sys.argv)
 
 def remove(update, context):
     msg = update.message
@@ -58,12 +66,12 @@ def remove(update, context):
     OldFile.write(NewFileData)
     OldFile.close()
 
+
+
 def install(update, context):
     update.message.reply_to_message.document.get_file().download(custom_path = 'utils/templates.py')
 
-    import sys
-    import os
-    os.execv(sys.executable, ['python'] + sys.argv)
+    os.execv(sys.executable, ['python3'] + sys.argv)
     
 
 __handlers__ = [
@@ -71,4 +79,3 @@ __handlers__ = [
     [CommandHandler("rmmeme", callback = remove, filters=Filters.user(SUDO_USERS), run_async=True)],
     [CommandHandler("install", callback = install, filters=Filters.user(SUDO_USERS) & Filters.reply, run_async=True)],
 ]
-    

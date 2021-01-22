@@ -58,3 +58,13 @@ def navbtn(page, length):
         InlineKeyboardButton(text = f'{emotes.get(int(page))} of {emotes.get(int(length))}', callback_data = f'currpage_{page}'),
         InlineKeyboardButton(text = '▶️', callback_data = f'page_{page + 1}'),
     ]
+
+
+def sortmemes(template):
+    sort = sorted(template.items())
+    newtemplates = {}
+
+    for eachsort in sort:
+        newtemplates.update({eachsort[0]: eachsort[1]})
+
+    return newtemplates

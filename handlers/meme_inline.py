@@ -37,7 +37,7 @@ def inlinetempl(update, context):
 
     qry = update.inline_query
 
-    RawMemeTemplate = qry.query.replace('meme', '').strip()
+    RawMemeTemplate = qry.query.split()[1].strip()
     templ = template.get(RawMemeTemplate)
 
     if not templ:
@@ -131,10 +131,10 @@ def inlinememe(update, context):
     result = [
         InlineQueryResultCachedPhoto(
             type = 'photo',
-            id = uuid4(),   
+            id = uuid4(),
             photo_file_id = templ.get('help'),
-            caption = ('🔁 Working on it 🔁'),
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = 'Loading. Please Wait...', url = 'https://t.me/su_bots')]]),
+            caption = ('🔄 Working on it 🔄'),
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text = '🔄 Creating. Please Wait... 🤡', url = 'https://t.me/su_bots')]]),
         ),
 
         InlineQueryResultArticle(
