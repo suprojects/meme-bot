@@ -24,5 +24,5 @@ def blackinline(update, context):
 
 
 __handlers__ = [
-    [InlineQueryHandler(callback = blackinline, run_async = True)],
+    [InlineQueryHandler(callback = blackinline)],
 ]
