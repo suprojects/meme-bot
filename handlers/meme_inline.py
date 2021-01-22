@@ -31,7 +31,7 @@ def inlineblank(update, context):
     )
 ]
 
-    update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl')
+    update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl', cache_time = 0)
 
 def inlinetempl(update, context):
 
@@ -52,7 +52,7 @@ def inlinetempl(update, context):
                 reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Available Meme Templates", url=create_deep_linked_url(context.bot.username, "memetempl", False))]])
         )
     ]
-        update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl')
+        update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl', cache_time = 0)
         return
 
 
@@ -74,7 +74,7 @@ def inlinetempl(update, context):
         ),
     ]
     
-    qry.answer(result, switch_pm_text = f"Template - '{RawMemeTemplate}'", switch_pm_parameter = f'memehelp_{RawMemeTemplate}')
+    qry.answer(result, switch_pm_text = f"Template - '{RawMemeTemplate}'", switch_pm_parameter = f'memehelp_{RawMemeTemplate}', cache_time = 0)
 
 
 
@@ -97,7 +97,7 @@ def inlinememe(update, context):
                 reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Available Meme Templates", url=create_deep_linked_url(context.bot.username, "memetempl", False))]])
         )
     ]
-        update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl')
+        update.inline_query.answer(result, switch_pm_text = 'Available Meme Templates', switch_pm_parameter = 'memetempl', cache_time = 0)
         return
 
 
