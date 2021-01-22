@@ -18,7 +18,7 @@ def errorinline(update, context):
         ),
     ]
 
-    update.inline_query.answer(result)
+    update.inline_query.answer(result, cache_time = 0)
 
 
 
