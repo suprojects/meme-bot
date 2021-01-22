@@ -8,6 +8,8 @@ from uuid import uuid4
 
 def blackinline(update, context):
 
+    print(update)
+
     result = [
         InlineQueryResultArticle(
             id = uuid4(),
@@ -24,5 +26,5 @@ def blackinline(update, context):
 
 
 __handlers__ = [
-    #[InlineQueryHandler(callback = blackinline, pattern = ('\w'))],
+    [InlineQueryHandler(callback = blackinline)],
 ]
