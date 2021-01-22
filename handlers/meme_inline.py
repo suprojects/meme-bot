@@ -169,7 +169,7 @@ def editinline(update, context):
 
 __handlers__= [
 
-    [InlineQueryHandler(callback = inlineblank, pattern = ('^meme$'), run_async = True)],
+    [InlineQueryHandler(callback = inlineblank, pattern = ('^meme$'))],
     [InlineQueryHandler(callback = inlinetempl, pattern = ('^meme\s[^\s]\w*$'), run_async = True)],
     [InlineQueryHandler(callback = inlinememe, pattern = ('^meme\s([^\s]+)\s\w.*$'), run_async = True)],
     [ChosenInlineResultHandler(callback = editinline, run_async = True)],
