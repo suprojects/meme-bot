@@ -34,7 +34,7 @@ def btns(pages):
             btnpage.clear()
             
             i += 1
-            btnrow.append(InlineKeyboardButton(text = eachtempl, callback_data = f'templ_{eachtempl}'))       
+            btnrow.append(InlineKeyboardButton(text = eachtempl, callback_data = f'templ_{eachtempl}'))
     keyboard.append(btnpage)
 
     return keyboard

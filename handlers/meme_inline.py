@@ -150,10 +150,9 @@ def inlinememe(update, context):
 
 
 def editinline(update, context):
-    try:
-        if not search('^meme\s([^\s]+)\s\w.*$', update.chosen_inline_result.query) or update.inline_message_id is None: return
-    except AttributeError: return
     
+    if not search('^meme\s([^\s]+)\s\w.*$', update.chosen_inline_result.query) or not update.chosen_inline_result.inline_message_id: return
+
     qry = update.chosen_inline_result
 
     RawMemeTemplate = qry.query.split()[1].strip()
