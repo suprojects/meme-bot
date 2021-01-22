@@ -74,7 +74,7 @@ def inlinetempl(update, context):
         ),
     ]
     
-    qry.answer(result)
+    qry.answer(result, switch_pm_text = f"Template - '{RawMemeTemplate}'", switch_pm_parameter = f'memehelp_{RawMemeTemplate}')
 
 
 

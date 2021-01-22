@@ -22,7 +22,9 @@ def memetemplhelp(update, context):
 
     usr, msg = update.message.from_user, update.message
 
-    RawText = msg.text[int(msg.entities[0].length + 1):]
+    if msg.text.startswith('/start'): RawText = msg.text.replace('/start memehelp_', '')
+
+    else: RawText = msg.text[int(msg.entities[0].length + 1):]
 
     if RawText == '':
         BUTTON_MARKUP = InlineKeyboardMarkup([[meme_help],[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else InlineKeyboardMarkup([[meme_help]])
@@ -41,10 +43,11 @@ def memetemplhelp(update, context):
 
     texts = maketexts(MemeTemplate.get('texts'))
 
-    BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else None
-    msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
+    BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if msg.chat.type != 'private' else '' if msg.text.startswith('/start memehelp_') else InlineKeyboardMarkup([[InlineKeyboardButton("Switch to Inline ↩️", switch_inline_query = (f"meme {RawMemeTemplate}"))]])
+    sentmsg = msg.reply_photo(MemeTemplate.get('help'), caption = f'<code>/meme {RawMemeTemplate} {texts}</code>', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
-
+    if msg.text.startswith('/start memehelp_') and msg.chat.type == 'private':
+        sentmsg.edit_reply_markup(reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Return to chat ↩️", switch_inline_query = (f"meme {RawMemeTemplate}"))]]))
 
 
 def templatelist(update, context):
@@ -160,6 +163,9 @@ __handlers__ = [
     [CommandHandler("templates", callback = templates_group, filters=Filters.chat_type.group, run_async=True)],
     [CommandHandler("start", templatelist, Filters.regex('memetempl'), pass_args=False)],
     [CommandHandler("memehelp", callback = memetemplhelp, run_async=True)],
+
+    [CommandHandler("start", filters = Filters.regex('memehelp_'), callback = memetemplhelp, pass_args = True, run_async=True)],
+
     [CallbackQueryHandler(pattern = "^templ_", callback = templ, run_async=True)],
     [CallbackQueryHandler(pattern = "^templist_", callback = navback, run_async=True)],
     [CallbackQueryHandler(pattern = "^page_", callback = navigate, run_async=True)],

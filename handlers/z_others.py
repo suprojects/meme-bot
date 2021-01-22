@@ -13,12 +13,12 @@ def errorinline(update, context):
             id = uuid4(),
             title = 'Unknown Command',
             description = "(╯°□°）╯︵ ┻━┻)",
-            input_message_content = InputTextMessageContent("❌ Unrecognized Command"),
+            input_message_content = InputTextMessageContent("❌ Unrecognized Command\n(╯°□°）╯︵ ┻━┻)"),
             thumb_url = 'https://telegra.ph/file/f13d453c19bf9beb3325c.png',
         ),
     ]
 
-    update.inline_query.answer(result, cache_time = 0)
+    update.inline_query.answer(result)
 
 
 
@@ -35,7 +35,7 @@ def blackinline(update, context):
         ),
     ]
 
-    update.inline_query.answer(result, cache_time = 0)
+    update.inline_query.answer(result)
 
 
 
