@@ -7,11 +7,22 @@ from html import escape
 
 def help_pvt(update, context):
     
-    help_text = 'Tap on the buttons to see the help menu 😉.'
+    name = escape(update.message.from_user.first_name if update.message else update.callback_query.message.chat.first_name)
+
+    help_text = f"""
+Hello {name} 👋. I am the bot 🤖 that is going to take over the world 🌍 soon, real soon...
+
+You should already know about me, but no don't worry if you don't. Ill give you a second chance.
+
+I am the {context.bot.first_name}, the untimate Meme Madness. I can generate 🆒 memes 4 u ╰(*°▽°*)╯
+
+Nothing much, just tap on these button you see below. You know... 🔽🔽🔽 theeese buttons. 
+"""
 
     BUTTONS = [
         [InlineKeyboardButton(text = '🤡 Meme Generator', callback_data = 'help_meme')],
-        [InlineKeyboardButton(text = '🐤 Fake Tweet Generator', callback_data = 'help_tweet')]
+        [InlineKeyboardButton(text = '🐤 Fake Tweet Generator', callback_data = 'help_tweet')],
+        [InlineKeyboardButton(text = '🙅‍♂️ DO NOT CLICK ELSE THINGS WILL BREAK', callback_data = 'help_support')],
     ]
 
     if update.callback_query:
@@ -91,6 +102,26 @@ def help_tweet(update, context):
     update.callback_query.answer('Coming Soon 🔄', show_alert = True)
 
 
+def support(update, context):
+
+    BUTTONS = [
+        [
+            InlineKeyboardButton(text = '👥 Amazing Community', url = 'https://t.me/su_Chats'),
+            InlineKeyboardButton(text = '🔈 More Projects', url = 'https://t.me/su_Bots'),
+        ],
+    ]
+
+    help_text = 'Congratulations 🎉! You have found out our secret headquarters 🏢. Let this be a secret 🤐. Do not tell any spies out there 🤫! You are invited to join our secret community. Who-hoo 🥳!'
+
+    if update.callback_query:
+        BUTTONS.append([InlineKeyboardButton(text = '🔙 Go Back', callback_data = 'help_home')])
+        update.callback_query.answer('Shhhh 🤫', show_alert = True)
+        update.callback_query.edit_message_text(text = help_text, reply_markup = InlineKeyboardMarkup(BUTTONS))
+
+    else: update.message.reply_text(text = help_text, reply_markup = BUTTONS)
+
+
+
 __handlers__ = [
     [CommandHandler("help", callback = help_pvt, filters=Filters.regex('^/help$') & Filters.chat_type.private, run_async=True)],
     [CallbackQueryHandler(pattern = "^help_home$", callback = help_pvt, run_async=True)],
@@ -101,4 +132,6 @@ __handlers__ = [
     [CommandHandler("start", callback = help_inlinememe, filters=Filters.regex('help_inlinememe') & Filters.chat_type.private, run_async=True)],
     
     [CallbackQueryHandler(pattern = "^help_tweet$", callback = help_tweet, run_async=True)],
+
+    [CallbackQueryHandler(pattern = "^help_support$", callback = support, run_async=True)],
 ]
