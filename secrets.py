@@ -14,7 +14,7 @@ if os.path.exists('tokens.py'):
 
 IMGFLIP_URL = os.environ.get('IMGFLIP_URL')
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-SUDO_USERS = 1178472788,
+SUDO_USERS = 1482759920,
 LOG_CHAT = os.environ.get("LOG_ID")
 IMGFLIP_USERNAME = os.environ.get("IMGFLIP_USERNAME")
 IMGFLIP_PASSWORD = os.environ.get("IMGFLIP_PASSWORD")
