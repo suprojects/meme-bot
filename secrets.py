@@ -6,7 +6,7 @@ except ImportError:
 
 import os
 
-SUDO_USERS = list(map(int, environ.get("SUDO_USERS").split()))
+SUDO_USERS = list(map(int, os.environ.get("SUDO_USERS").split()))
 IMGFLIP_URL = os.environ.get('IMGFLIP_URL')
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 LOG_CHAT = os.environ.get("LOG_CHAT")
