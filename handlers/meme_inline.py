@@ -1,4 +1,4 @@
-from secrets import THUMB_PIC, HOMEPIC as homepic
+from secrets import THUMB_PIC, HOMEPIC as homepic, ERROR_PIC
 
 from uuid import uuid4
 from ast import literal_eval as convert
@@ -16,6 +16,8 @@ from telegram.utils.helpers import create_deep_linked_url
 from utils.templates import template
 from utils.func import maketexts, btns, navbtn, emotes
 from utils.make import make
+
+from database import botusers
 
 
 def inlineblank(update, context):
@@ -155,17 +157,27 @@ def editinline(update, context):
 
     qry = update.chosen_inline_result
 
+    if not botusers.if_user(int(qry.from_user.id)):
+        BUTTONS = [
+            [InlineKeyboardButton(text = "Start the bot", url = create_deep_linked_url(context.bot.username, "inlinestart", False))]
+        ]
+        context.bot.editMessageMedia(inline_message_id = qry.inline_message_id, media = InputMediaPhoto(ERROR_PIC, caption = f"You will have to start {context.bot.username} in PM in order to use it."), reply_markup = InlineKeyboardMarkup(BUTTONS))
+        return
+
     RawMemeTemplate = qry.query.split()[1].strip()
     templ = template.get(RawMemeTemplate)
 
     if not templ: return
 
-    texts = (qry.query.replace(qry.query.split()[0], '').replace(qry.query.split()[1], '').strip()).split(',')
+    texts = qry.query.replace(qry.query.split()[0] + " " + qry.query.split()[1], '').strip().split(',')
 
     if int(len(texts)) != int(templ.get('texts')): return
 
     context.bot.editMessageMedia(inline_message_id = qry.inline_message_id, media = InputMediaPhoto(make(templ.get('id'), texts)))
 
+def inlstart(update, context):
+    botusers.new_user(update.message.from_user)
+    update.message.reply_text("You can use me in inline mode now! Just make sure not to block me.", reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text= "How to use Inline mode", callback_data="help_inlinememe")],[InlineKeyboardButton(text = "Switch to Inline mode", switch_inline_query = "")]]))
 
 __handlers__= [
 
@@ -173,4 +185,6 @@ __handlers__= [
     [InlineQueryHandler(callback = inlinetempl, pattern = ('^meme\s[^\s]\w*$'), run_async = True)],
     [InlineQueryHandler(callback = inlinememe, pattern = ('^meme\s([^\s]+)\s\w.*$'), run_async = True)],
     [ChosenInlineResultHandler(callback = editinline, run_async = True)],
+
+    [CommandHandler(command="start", callback=inlstart, filters= Filters.regex('inlinestart'), run_async=True)]
 ]

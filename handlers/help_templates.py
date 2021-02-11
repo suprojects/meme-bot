@@ -5,6 +5,7 @@ from utils.templates import template
 from utils.func import maketexts, btns, emotes, navbtn
 from ast import literal_eval as convert
 from secrets import HOMEPIC as homepic
+from database import botusers
 
 
 def templates_group(update, context):
@@ -61,6 +62,7 @@ def templatelist(update, context):
 
     update.message.reply_photo(homepic, caption = 'Select the meme template to see the usage and the meme example', reply_markup = BUTTONS)
 
+    botusers.new_user(update.message.from_user)
 
 
 def templ(update, context):
@@ -161,7 +163,7 @@ __handlers__ = [
 
     [CommandHandler('templates', callback = templatelist, filters = Filters.chat_type.private, run_async = True)],
     [CommandHandler("templates", callback = templates_group, filters=Filters.chat_type.group, run_async=True)],
-    [CommandHandler("start", templatelist, Filters.regex('memetempl'), pass_args=False)],
+    [CommandHandler("start", templatelist, Filters.chat_type.private & Filters.regex('memetempl'), pass_args=False)],
     [CommandHandler("memehelp", callback = memetemplhelp, run_async=True)],
 
     [CommandHandler("start", filters = Filters.regex('memehelp_'), callback = memetemplhelp, pass_args = True, run_async=True)],

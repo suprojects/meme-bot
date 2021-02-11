@@ -2,6 +2,7 @@ from telegram.ext import CommandHandler, Filters
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from html import escape
 from telegram.utils import helpers
+from database import botusers
 
 def start(update, context):
     usr,msg = update.message.from_user, update.message
@@ -23,6 +24,8 @@ I can generate memes for you 🤩!
 Send /help to know more.
 ''', parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
 
+    botusers.new_user(usr)
+    
 
 def start_group(update, context):
     update.message.reply_text(text = f'Alive and ready to generate memes!', reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🆒", callback_data=(f"delete_{update.message.from_user.id}"))]]))

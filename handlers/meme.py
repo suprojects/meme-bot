@@ -31,8 +31,11 @@ def MakeMeme(update, context):
 
 
     MemeID = int(MemeTemplate.get('id'))
-    RawMemeText = RawText.replace(RawMemeTemplate, '')
+    print(RawText)
+    texts = RawText.split(' ',1)[1].strip().split(',')
+    print(texts)
 
+'''
 
     if RawMemeText == '':
         BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if cht.type != 'private' else None
@@ -58,7 +61,7 @@ def MakeMeme(update, context):
 
     msg.reply_photo(make.make(MemeID, MemeText), caption = f'By: <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a>', parse_mode = 'HTML', quote = False)
     return
-
+'''
 __handlers__ = [
     [CommandHandler("meme", callback = MakeMeme, run_async=True)],
 
