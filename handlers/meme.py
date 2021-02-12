@@ -31,22 +31,16 @@ def MakeMeme(update, context):
 
 
     MemeID = int(MemeTemplate.get('id'))
-    print(RawText)
-    texts = RawText.split(' ',1)[1].strip().split(',')
-    print(texts)
 
-'''
-
-    if RawMemeText == '':
+    if RawText.replace((RawText.split(' ',1)[1].strip()), '') == '':
         BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if cht.type != 'private' else None
         msg.reply_text(text = (f"Give me <code>{MemeTemplate.get('texts')}</code> texts separated by a comma."), parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return
 
+    texts = RawText.split(' ',1)[1].strip().split(',')
 
-    MemeText = RawMemeText.split(',')
 
-
-    if (len(MemeText) != int(MemeTemplate.get('texts'))):
+    if (len(texts) != int(MemeTemplate.get('texts'))):
         BUTTON_MARKUP = InlineKeyboardMarkup([[InlineKeyboardButton("OK", callback_data=(f"delete_{usr.id}"))]]) if cht.type != 'private' else None
         update.message.reply_text(text = (f"Give me <code>{MemeTemplate.get('texts')}</code> texts separated by a comma.\nYou gave me <code>{len(MemeText)}</code>."), parse_mode = 'HTML', reply_markup = BUTTON_MARKUP)
         return
@@ -56,12 +50,12 @@ def MakeMeme(update, context):
     update.message.chat.send_chat_action('upload_photo')
 
     if msg.reply_to_message and cht.type != 'private':
-        msg.reply_to_message.reply_photo(make.make(MemeID, MemeText), caption = f'By: <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a>', parse_mode = 'HTML')
+        msg.reply_to_message.reply_photo(make.make(MemeID, texts), caption = f'By: <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a>', parse_mode = 'HTML')
         return
 
-    msg.reply_photo(make.make(MemeID, MemeText), caption = f'By: <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a>', parse_mode = 'HTML', quote = False)
+    msg.reply_photo(make.make(MemeID, texts), caption = f'By: <a href="tg://user?id={usr.id}">{escape(usr.first_name)}</a>', parse_mode = 'HTML', quote = False)
     return
-'''
+
 __handlers__ = [
     [CommandHandler("meme", callback = MakeMeme, run_async=True)],
 
