@@ -12,11 +12,9 @@ def help_pvt(update, context):
     help_text = f"""
 Hello {name} 👋. I am the bot 🤖 that is going to take over the world 🌍 soon, real soon...
 
-You should already know about me, but no don't worry if you don't. Ill give you a second chance.
+I am the {context.bot.first_name}, the ultimate Meme Madness. I can generate 🆒 memes 4 u ╰(*°▽°*)╯
 
-I am the {context.bot.first_name}, the untimate Meme Madness. I can generate 🆒 memes 4 u ╰(*°▽°*)╯
-
-Nothing much, just tap on these button you see below. You know... 🔽🔽🔽 theeese buttons. 
+Nothing much, just tap on these button you see below 🔽. 
 """
 
     BUTTONS = [
