@@ -18,7 +18,7 @@ def broadcast(update, context):
     for user in users:
 
         try:
-            context.bot.send_message(user['id'], text)
+            context.bot.send_message(user['id'], text, disable_web_page_preview=True)
             success += 1
 
         except error.Unauthorized:
@@ -43,7 +43,7 @@ def group_broadcast(update, context):
     for chat in chats:
 
         try:
-            context.bot.send_message(chat['id'], text)
+            context.bot.send_message(chat['id'], text, disable_web_page_preview=True)
             success += 1
 
         except error.BadRequest:
